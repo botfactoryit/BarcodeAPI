@@ -14,6 +14,8 @@ RUN dotnet publish -c Release -o out
 FROM microsoft/dotnet:1.1-runtime
 WORKDIR /app
 
+RUN apt update && apt install -y libgdiplus
+
 # (that's new) copy output from previous image
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "BarcodeAPI.dll"]
