@@ -14,11 +14,13 @@ namespace BarcodeAPI.Controllers
     public class DecodeController : Controller
     {
         [HttpPost]
-        public string Post(IFormFile file)
+        public IActionResult Post(IFormFile file)
         {
+            Response.StatusCode = 200;
+
             if (file == null)
             {
-                return "";
+                return Content("");
             }
 
             // create a barcode reader instance
@@ -38,8 +40,8 @@ namespace BarcodeAPI.Controllers
 
             // detect and decode the barcode inside the bitmap
             Result result = reader.Decode(image);
-
-            return result?.Text;
+            
+            return Content(result?.Text);
         }
     }
 }
